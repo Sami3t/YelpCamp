@@ -39,3 +39,54 @@ body {
 .campground-image-card {
     height:100%;
 }
+
+
+/* main page styles tablet mode */
+@media screen and (max-width: 768px) {
+    .nav-logo-text {
+        
+        display: none;
+        
+    }
+    .mobile-float-right {
+        float: none !important;
+    }
+   
+    .mobile-nav a {
+        margin: 0 1.0rem ;
+
+    }
+    .mobile-signintext {
+        display: inline;
+    }   
+    .mobile-header-text{
+        font-size: 5.3rem;
+        margin-bottom: 2.7rem;
+    } 
+    .mobile-lead {
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+    }
+    
+}
+
+/* main page styles tablet mode */
+@media screen and (max-width: 480px) {
+    .home-mobile {
+        display: none;
+    }
+    .mobile-nav a {
+        margin: 0 0.4rem 0 0.4rem;
+
+    }
+
+    .mobile-header-text{
+        font-size: 3rem;
+        margin-bottom: 1.6rem;
+    } 
+    .mobile-lead {
+        display: none;
+    }
+    
+}
+
