@@ -9,27 +9,37 @@ const geocoder = mbxGeocoding({accessToken: mapBoxToken});
 
 module.exports.index = async (req, res) => {
     const campgrounds = await Campground.find({});
-    res.render('campgrounds/index', { campgrounds })
+    return res.render('campgrounds/index', { campgrounds })
 };
 
 module.exports.renderNewForm = (req, res) => {
     
-    res.render('campgrounds/new');
+    return res.render('campgrounds/new');
 }
 
 let foundCampgrounds = [];
+let state = "";
+let maxPrice;
 
 module.exports.renderSearch = (req, res) => {
     
-    res.render("campgrounds/search", {foundCampgrounds});
+    return res.render("campgrounds/search", {foundCampgrounds, state, maxPrice});
 }
 
 
 module.exports.searchCampgroundPost = async (req, res, next) => {
-    const {state, maxPrice} = req.body;
+    state = req.body.state;
+    maxPrice = req.body.maxPrice;
     console.log(req.body);
     foundCampgrounds = await Campground.find({"state": `${state}`, "price": {$lte: maxPrice}});
-    return res.render("campgrounds/search", {foundCampgrounds});
+    if(foundCampgrounds.length > 0){
+        return res.render("campgrounds/search", {foundCampgrounds, state, maxPrice});
+       
+    } else { 
+    
+    req.flash("error", `No campgrounds found in ${state} for less than ${maxPrice} dollar(s)`);
+    return res.redirect("/campgrounds/search");  
+    }
     
    
     
@@ -66,7 +76,7 @@ module.exports.showCampground = async (req, res,) => {
         req.flash("error", "Campground Not Found");
         return res.redirect("/campgrounds");
     } else {
-        res.render('campgrounds/show', { campground });
+        return res.render('campgrounds/show', { campground });
     };
 };
 
@@ -108,7 +118,7 @@ module.exports.deleteCampground = async (req, res) => {
     await Campground.findByIdAndDelete(id);
     req.flash("success", "Successfully deleted Campground");
 
-    res.redirect('/campgrounds');
+    return res.redirect('/campgrounds');
 
 };
 
