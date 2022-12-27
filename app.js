@@ -23,8 +23,8 @@ const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
 const MongoStore = require('connect-mongo');
 
-const dbUrl = process.env.DB_URL ||  'mongodb://localhost:27017/yelp-camp';
-
+const dbUrl =   'mongodb://localhost:27017/yelp-camp';
+// const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -179,6 +179,9 @@ app.use(
 app.use("/", usersRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/reviews", reviewRoutes);
+
+
+
 
 app.get('/', (req, res) => {
     res.render('home')

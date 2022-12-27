@@ -1,4 +1,11 @@
-
+@keyframes slideInFromBottom {
+    0% {
+      transform: translateY(70%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
 
 body {
     height: 100vh;
@@ -8,12 +15,18 @@ body {
     background-position: center;
     
     box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.5);
+    overflow: hidden;
 }
+
 
 .cover-container {
     max-width: 60vw;
+    
 }
-
+.main-area-responsive {
+    animation: 1.5s ease-out 0s 1 slideInFromBottom;
+    
+}
 .nav-link {
     padding: 0.25rem 0;
     margin-left: 1.4rem;

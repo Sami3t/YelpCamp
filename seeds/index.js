@@ -31,7 +31,8 @@ const seedDB = async() => {
         const camp = new Campground({
             //your user id mongo
             author: "639bedfabdbd89d0f2e9b4bc",
-            location: `${cities[random1000].city}, ${cities[random1000].state}`,
+            city: `${cities[random1000].city}`,
+            state: `${cities[random1000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
             images: [{
                 url: "https://res.cloudinary.com/dp3gstxka/image/upload/v1671507437/YelpCamp/znhzsmozwx2em0cfoxjt.png",
@@ -62,5 +63,5 @@ const seedDB = async() => {
 
 seedDB().then(() => {
     mongoose.connection.close();
-    // console.log("seeded");
+    console.log("seeded");
 });

@@ -4,6 +4,9 @@ const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const mapBoxToken = process.env.MAPBOX_TOKEN;
 
 const geocoder = mbxGeocoding({accessToken: mapBoxToken});
+
+
+
 module.exports.index = async (req, res) => {
     const campgrounds = await Campground.find({});
     res.render('campgrounds/index', { campgrounds })
@@ -14,9 +17,28 @@ module.exports.renderNewForm = (req, res) => {
     res.render('campgrounds/new');
 }
 
+let foundCampgrounds = [];
+
+module.exports.renderSearch = (req, res) => {
+    
+    res.render("campgrounds/search", {foundCampgrounds});
+}
+
+
+module.exports.searchCampgroundPost = async (req, res, next) => {
+    const {state, maxPrice} = req.body;
+    console.log(req.body);
+    foundCampgrounds = await Campground.find({"state": `${state}`, "price": {$lte: maxPrice}});
+    return res.render("campgrounds/search", {foundCampgrounds});
+    
+   
+    
+}
+
 module.exports.createCampground = async (req, res, next) => {
+    const location =   `${req.body.campground.city} ${req.body.campground.state}`;
     const geoData = await geocoder.forwardGeocode({
-        query: req.body.campground.location,
+        query: location,
         limit: 1
     }).send();
     
@@ -89,3 +111,4 @@ module.exports.deleteCampground = async (req, res) => {
     res.redirect('/campgrounds');
 
 };
+
